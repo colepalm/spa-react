@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import responseList from './responseList';
 import './App.css';
 
 class App extends Component {
+  state = {questions: []};
+
+  componentDidMount() {
+    fetch('/questions')
+      .then(res => res.json())
+      .then(questions => this.setState({ questions }));
+  }
+
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <h1>Questions</h1>
+        {this.state.questions.map((question, index) =>
+          <div key={index}>
+            <div key={question.id}>{question.contents}</div>
+            <responseList />
+          </div>
+        )}
       </div>
     );
   }
