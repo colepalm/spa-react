@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import responseList from './responseList';
+import ResponseList from './question/ResponseList';
 import './App.css';
 
 class App extends Component {
@@ -13,12 +13,11 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <h1>Questions</h1>
+      <div className="container">
         {this.state.questions.map((question, index) =>
-          <div key={index}>
-            <div key={question.id}>{question.contents}</div>
-            <responseList />
+          <div className="question" key={index}>
+            <h5 key={question.id}><strong>{question.contents}</strong></h5>
+            <ResponseList key={index} id={question.id}/>
           </div>
         )}
       </div>
