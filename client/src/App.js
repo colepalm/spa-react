@@ -21,13 +21,24 @@ class App extends Component {
     this.setState({hasAnswered: true});
   }
 
+  getRandomColor() {
+    let letters = '0123456789ABCDEF';
+    let color = '#';
+
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+
+    return color;
+  }
+
   render() {
     return (
       <div className="container">
         {this.state.questions.map((question, index) =>
           <div className="question" key={index}>
             <h5 key={question.id}><strong>{question.contents}</strong></h5>
-            {this.state.hasAnswered ? <Results key={index} id={question.id}/> : <ResponseList key={index} id={question.id} hasAnswered={this.handleClick.bind(this)}/>}
+            {this.state.hasAnswered ? <Results key={index} id={question.id} getRandomColor={this.getRandomColor}/> : <ResponseList key={index} id={question.id} hasAnswered={this.handleClick.bind(this)}/>}
           </div>
         )}
       </div>
