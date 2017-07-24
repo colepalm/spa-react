@@ -5,22 +5,25 @@ class Footer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { toSubmit: '' }
+    this.state = { toSubmit: '', id: -1}
   }
 
   componentWillUpdate(props) {
-    this.state.toSubmit = props.toSubmit
+    this.state.toSubmit = props.toSubmit;
+    this.state.id = props.question;
   }
 
   submit() {
-    if (!this.state.toSubmit) {
+    if (!this.state.toSubmit || this.state.id < 0) {
       return;
     }
 
     fetch('/responses', {
-      method: 'POST',
+      method: 'post',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
       body: JSON.stringify({
-        response: this.state.toSubmit
+        response: this.state.toSubmit,
+        id: this.state.id.value
       })
     })
   }

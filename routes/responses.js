@@ -1,36 +1,35 @@
-let express = require('express');
-let router = express.Router();
+const express = require('express');
+const MongoClient = require('mongodb').MongoClient;
+const router = express.Router();
 
-router.get('/:id', function(req, res, next) {
-  let id = parseInt(req.params.id);
-  let toReturn;
+let db;
 
-  let responses = [{
-      id: 1,
-      responses: ['1', '2', '3', '4', 'More than 4']
-  },
-  {
-      id: 2,
-      responses: ['1', '2', '3', '4', 'More than 4']
-  }];
-
-  responses.forEach(function(response) {
-      if (response.id === id)
-          toReturn = response.responses;
-  });
-
-  if (toReturn)
-    res.json(toReturn);
-
-  else {
-      res.status(500).send({ error: 'Unable to find responses associated with this question' })
-  }
-
+MongoClient.connect('mongodb://polecalm:polecalm@ds145659.mlab.com:45659/spa-react', (err, database) => {
+  if (err) return console.log(err);
+  db = database;
 });
 
 
-router.post('/', function(req, res, next) {
-  console.log(req);
+router.get('/:id', function(req, res) {
+  let id = parseInt(req.params.id);
+  let cursor = db.collection('questions').find();
+
+  cursor.toArray(function(err, results) {
+    results.forEach(function(results) {
+      if (results.id === id) {
+        res.json(results.responses)
+      }
+    })
+  });
+});
+
+
+router.post('/', function(req, res) {
+
+  db.collection('responses').save(req.body, (err, result) => {
+    if (err) return console.log(err);
+  })
+
 });
 
 module.exports = router;
