@@ -13,7 +13,6 @@ class ResponseList extends React.Component {
   state = {responses: []};
 
   componentWillMount() {
-    console.log(this.state);
     fetch('/responses/' + this.state.id.value)
       .then(res => res.json())
       .then(responses => this.setState({ responses }));
@@ -22,7 +21,6 @@ class ResponseList extends React.Component {
   handleChange(response) {
     this.setState({selected: response});
   }
-
 
   render() {
     return (
@@ -37,7 +35,7 @@ class ResponseList extends React.Component {
             </div>
             )}
         </form>
-        <Footer toSubmit={this.state.selected} question={this.state.id} />
+        <Footer toSubmit={this.state.selected} question={this.state.id} footerClick={this.props.hasAnswered} />
       </div>
     );
   }

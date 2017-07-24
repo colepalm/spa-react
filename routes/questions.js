@@ -13,10 +13,12 @@ router.get('/', function(req, res) {
 
   cursor.toArray(function(err, results) {
     results.forEach(function(result) {
+
       questions.push({
         contents: result.question,
         id: result.id
       });
+
     });
 
     res.json(questions);

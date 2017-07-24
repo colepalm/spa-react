@@ -25,7 +25,9 @@ class Footer extends React.Component {
         response: this.state.toSubmit,
         id: this.state.id.value
       })
-    })
+    });
+
+    this.props.footerClick();
   }
 
   render () {

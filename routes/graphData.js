@@ -9,29 +9,19 @@ MongoClient.connect('mongodb://polecalm:polecalm@ds145659.mlab.com:45659/spa-rea
   db = database;
 });
 
-
 router.get('/:id', function(req, res) {
   let id = parseInt(req.params.id);
-  let cursor = db.collection('questions').find();
+  let cursor = db.collection('responses').find();
+  let graphData = {};
 
   cursor.toArray(function(err, results) {
     results.forEach(function(results) {
 
       if (results.id === id) {
-        res.json(results.responses)
+        graphData[results.response] += 1;
       }
 
+      res.json(graphData);
     })
   });
 });
-
-
-router.post('/', function(req, res) {
-
-  db.collection('responses').save(req.body, (err, result) => {
-    if (err) return console.log(err);
-  })
-
-});
-
-module.exports = router;
