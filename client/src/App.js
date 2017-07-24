@@ -4,21 +4,36 @@ import Results from './results/Results'
 import './App.css';
 
 class App extends Component {
-  state = {questions: [], hasAnswered: false};
+  state = {questions: [], hasAnswered: []};
 
   constructor() {
     super();
-    this.setState({hasAnswered: false});
   }
 
   componentDidMount() {
     fetch('/questions')
       .then(res => res.json())
-      .then(questions => this.setState({ questions }));
+      .then(questions => {
+        this.setState({ questions });
+
+        const cached = localStorage.getItem('session');
+
+        if (cached) {
+          this.setState({hasAnswered: JSON.parse(cached)})
+        }
+        else {
+          let tempArray = [].fill(false, 0, questions.length-1);
+          this.setState({hasAnswered: tempArray})
+        }
+      });
   }
 
-  handleClick() {
-    this.setState({hasAnswered: true});
+  handleClick(context) {
+    let items = context.state.hasAnswered;
+    items[this] = true;
+    context.setState({hasAnswered: items});
+
+    localStorage.setItem('session', JSON.stringify(context.state.hasAnswered));
   }
 
   getRandomColor() {
@@ -38,7 +53,7 @@ class App extends Component {
         {this.state.questions.map((question, index) =>
           <div className="question" key={index}>
             <h5 key={question.id}><strong>{question.contents}</strong></h5>
-            {this.state.hasAnswered ? <Results key={index} id={question.id} getRandomColor={this.getRandomColor}/> : <ResponseList key={index} id={question.id} hasAnswered={this.handleClick.bind(this)}/>}
+            {this.state.hasAnswered[index] ? <Results key={index} id={question.id} getRandomColor={this.getRandomColor}/> : <ResponseList key={index} id={question.id} hasAnswered={this.handleClick.bind(index, this)}/>}
           </div>
         )}
       </div>

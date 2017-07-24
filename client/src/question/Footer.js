@@ -1,11 +1,12 @@
 import React from 'react';
+import Warning from './Warning'
 import '../App.css'
 
 class Footer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { toSubmit: '', id: -1}
+    this.state = { toSubmit: '', id: -1, warningMessage: false }
   }
 
   componentWillUpdate(props) {
@@ -15,7 +16,12 @@ class Footer extends React.Component {
 
   submit() {
     if (!this.state.toSubmit || this.state.id < 0) {
+      this.setState({warningMessage: true});
       return;
+    }
+
+    else {
+      this.setState({warningMessage: false})
     }
 
     fetch('/responses', {
@@ -33,7 +39,12 @@ class Footer extends React.Component {
   render () {
     return (
       <div className="panel-footer">
-        <input className="btn btn-green btn-margin" type="button" value="Submit" onClick={() => this.submit()}/>
+        <div className="col-sm-6">
+          {this.state.warningMessage ? <Warning />: <div></div>}
+        </div>
+        <div className="col-sm-6">
+          <input className="btn btn-green btn-margin" type="button" value="Submit" onClick={() => this.submit()}/>
+        </div>
       </div>
     );
   }
