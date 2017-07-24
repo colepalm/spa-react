@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"cd client && npm install && npm start\" \"node bin/www\""
+    "start": "concurrently \"node bin/www\" \"cd client && npm start\""
   },
   "dependencies": {
     "body-parser": "~1.17.1",

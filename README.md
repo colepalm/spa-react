@@ -11,10 +11,16 @@ To run the application:
 
 3. npm install
 
-4. npm start
+4. cd client
 
-5. Navigate to localhost:3000
+5. npm install
 
-6. Survey to your hearts content (or til you are done with the 5 included questions).
+6. cd ../
+
+7. npm start
+
+8. Navigate to localhost:3000
+
+9. Survey to your hearts content (or til you are done with the 5 included questions).
 ```
 
