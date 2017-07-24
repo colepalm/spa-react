@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "preinstall": "export NODE_ENV=production",
     "start": "concurrently \"node bin/www\" \"cd client && npm start\""
   },
   "dependencies": {
