@@ -1,11 +1,15 @@
 body {
   padding: 5px;
+  background-color: #f1f1f1;
 }
 
 .question{
   display: inline-block;
   vertical-align: top;
   width: 100%;
+  padding: 15px;
+  margin-bottom: 10px;
+  background-color: #FFFFFF;
 }
 
 .radio-form {
@@ -34,4 +38,22 @@ body {
   background-color: #1ab394;
   color: #fff;
   border-radius: 3px;
+}
+
+ul{
+  margin-top: 180px;
+  margin-bottom: 10px;
+}
+
+ul li span{
+  position: relative;
+  padding: 6px 20px;
+  border-radius: 13px;
+  color: white;
+  z-index: 2;
+}
+
+li {
+  height: 30px;
+  list-style-type: none;
 }

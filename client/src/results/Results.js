@@ -1,5 +1,6 @@
 import React from 'react';
 import PieChart from 'react-simple-pie-chart';
+import Legend from './Legend'
 
 
 class Results extends React.Component {
@@ -22,7 +23,7 @@ class Results extends React.Component {
   }
 
   fillSlices() {
-    let tempSlices = [];
+    let tempSlices = [], tempLegend = [];
 
     for(let key in this.state.data) {
       let color = this.props.getRandomColor();
@@ -30,19 +31,34 @@ class Results extends React.Component {
       tempSlices.push({
         color: color,
         value: this.state.data[key]
-      })
+      });
+
+      let index = tempLegend.indexOf(key);
+      if (index < 0) {
+        tempLegend.push({
+          backgroundColor: color,
+          response: key
+        })
+      }
     }
 
-    this.setState({slices: tempSlices})
+    this.setState({slices: tempSlices, legend: tempLegend});
   }
 
   render() {
-    if (!this.state.slices.length === 0)
+    if (this.state.slices.length === 0)
       return (<div>Loading...</div>);
 
     else {
       return (
-        <PieChart slices={this.state.slices}/>
+        <div>
+          <div className="col-sm-6">
+            <PieChart slices={this.state.slices}/>
+          </div>
+          <div className="col-sm-6">
+            <Legend toDisplay={this.state.legend}/>
+          </div>
+        </div>
       )
     }
   }
