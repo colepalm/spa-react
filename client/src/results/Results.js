@@ -1,15 +1,17 @@
 import React from 'react';
-import '../App.css';
+
 
 class Results extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state.id = {value: this.props.id};
+    this.state.id = this.props.id;
   }
 
+  state = {id: -1};
+
   componentWillMount() {
-    fetch('/graphData/' + this.state.id.value)
+    fetch('/graphData/' + this.state.id)
       .then(res => res.json())
       .then(responses => this.setState({ responses }));
   }

@@ -2,6 +2,8 @@ const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const router = express.Router();
 
+let db;
+
 MongoClient.connect('mongodb://polecalm:polecalm@ds145659.mlab.com:45659/spa-react', (err, database) => {
   if (err) return console.log(err);
   db = database;

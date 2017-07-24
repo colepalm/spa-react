@@ -18,10 +18,12 @@ router.get('/:id', function(req, res) {
     results.forEach(function(results) {
 
       if (results.id === id) {
-        graphData[results.response] += 1;
+        graphData[results.response] ? graphData[results.response] += 1 : graphData[results.response] = 1;
       }
+    });
 
-      res.json(graphData);
-    })
+    res.json(graphData);
   });
 });
+
+module.exports = router;
